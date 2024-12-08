@@ -9,12 +9,10 @@ namespace Cadastro_Drones
 {
     internal class Fabricante
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
 
-        public Fabricante(int id, string nome)
+        public Fabricante(string nome)
         {
-            Id = id;
             Nome = nome;
         }
 
@@ -23,7 +21,7 @@ namespace Cadastro_Drones
             try
             {
                 DatabaseConnection.Connection.Open();
-                string query = "INSERT INTO Fabricante (Nome) VALUES (@Nome)";
+                string query = "INSERT INTO Fabricante (Nome_fabricante) VALUES (@Nome)";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
                 command.Parameters.AddWithValue("@Nome", fabricante.Nome);
 
@@ -62,17 +60,40 @@ namespace Cadastro_Drones
             }
         }
 
-        public static void Delete(int fabricanteId)
+        public static void Delete(int Id)
         {
             try
             {
                 DatabaseConnection.Connection.Open();
-                string query = "DELETE FROM Fabricante WHERE Id = @fabricanteId";
+                string query = "DELETE FROM Fabricante WHERE Fabricante_Id = @fabricanteId";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
-                command.Parameters.AddWithValue("@Id", fabricanteId);
-
+                command.Parameters.AddWithValue("@fabricanteId", Id);
                 command.ExecuteNonQuery();
 
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Erro: " + e.Message);
+            }
+            finally
+            {
+                DatabaseConnection.Connection.Close();
+            }
+        }
+
+        public static void List()
+        {
+            try
+            {
+                DatabaseConnection.Connection.Open();
+                string query = "SELECT * FROM Fabricante";
+                MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Console.WriteLine(reader["fabricante_Id"] + " - " + reader["Nome_fabricante"]);
+                }
             }
             catch (MySqlException e)
             {

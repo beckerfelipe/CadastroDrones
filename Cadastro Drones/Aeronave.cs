@@ -11,16 +11,14 @@ namespace Cadastro_Drones
 {
     internal class Aeronave
     {
-        public int Id { get; private set; }
         public string Codigo_Aeronave { get; private set; }
         public string Numero_Serie { get; private set; }
 
         public int IdModelo { get; private set; }
         public int IdFabricante { get; private set; }
 
-        public Aeronave(int id, string codigo_Aeronave, string numero_Serie, int idModelo, int idFabricante)
+        public Aeronave(string codigo_Aeronave, string numero_Serie, int idModelo, int idFabricante)
         {
-            Id = id;
             Codigo_Aeronave = codigo_Aeronave;
             Numero_Serie = numero_Serie;
             IdModelo = idModelo;
@@ -32,7 +30,7 @@ namespace Cadastro_Drones
             try
             {
                 DatabaseConnection.Connection.Open();
-                string query = "INSERT INTO Aeronave (Codigo_Aeronave, Numero_Serie, IdModelo, IdFabricante) VALUES (@Codigo_Aeronave, @Numero_Serie, @IdModelo, @IdFabricante)";
+                string query = "INSERT INTO Aeronave (Codigo_Aeronave, Numero_Serie, modelo_id, fabricante_id) VALUES (@Codigo_Aeronave, @Numero_Serie, @IdModelo, @IdFabricante)";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
                 command.Parameters.AddWithValue("@Codigo_Aeronave", aeronave.Codigo_Aeronave);
                 command.Parameters.AddWithValue("@Numero_Serie", aeronave.Numero_Serie);
@@ -56,7 +54,7 @@ namespace Cadastro_Drones
             try
             {
                 DatabaseConnection.Connection.Open();
-                string query = "UPDATE Aeronave SET Codigo_Aeronave = @Codigo_Aeronave, Numero_Serie = @Numero_Serie, IdModelo = @IdModelo, IdFabricante = @IdFabricante WHERE Id = @aeronaveId";
+                string query = "UPDATE Aeronave SET Codigo_Aeronave = @Codigo_Aeronave, Numero_Serie = @Numero_Serie, Modelo_id = @IdModelo, Fabricante_id = @IdFabricante WHERE Id = @aeronaveId";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
                 command.Parameters.AddWithValue("@Codigo_Aeronave", aeronave.Codigo_Aeronave);
                 command.Parameters.AddWithValue("@Numero_Serie", aeronave.Numero_Serie);
@@ -77,17 +75,40 @@ namespace Cadastro_Drones
             }
         }
 
-        public static void Delete(int aeronaveId)
+        public static void Delete(int Id)
         {
             try
             {
                 DatabaseConnection.Connection.Open();
                 string query = "DELETE FROM Aeronave WHERE Id = @aeronaveId";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
-                command.Parameters.AddWithValue("@Id", aeronaveId);
+                command.Parameters.AddWithValue("@Id", Id);
 
                 command.ExecuteNonQuery();
 
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Erro: " + e.Message);
+            }
+            finally
+            {
+                DatabaseConnection.Connection.Close();
+            }
+        }
+
+        public static void List()
+        {
+            try
+            {
+                DatabaseConnection.Connection.Open();
+                string query = "SELECT * FROM Aeronave";
+                MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Console.WriteLine(reader["Aeronave_Id"] + " - " + reader["Codigo_Aeronave"] + " - " + reader["Numero_Serie"] + " - " + reader["modelo_id"] + " - "+ reader["fabricante_id"]);
+                }
             }
             catch (MySqlException e)
             {

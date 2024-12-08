@@ -9,14 +9,12 @@ namespace Cadastro_Drones
 {
     internal class Operador
     {
-        public int Id { get; private set; }
         public string Tipo { get; private set; }
         public string Cadastro { get; private set; }
         public string Nome { get; private set; }
     
-        public Operador(int id, string tipo, string cadastro, string nome)
+        public Operador(string tipo, string cadastro, string nome)
         {
-            Id = id;
             Tipo = tipo;
             Cadastro = cadastro;
             Nome = nome;
@@ -27,7 +25,7 @@ namespace Cadastro_Drones
             try
             {
                 DatabaseConnection.Connection.Open();
-                string query= "INSERT INTO Operador (Tipo, Cadastro, Nome) VALUES (@Tipo, @Cadastro, @Nome)";
+                string query= "INSERT INTO Operador (Tipo, Cadastro, Nome_Operador) VALUES (@Tipo, @Cadastro, @Nome)";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
                 command.Parameters.AddWithValue("@Tipo", operador.Tipo);
                 command.Parameters.AddWithValue("@Cadastro", operador.Cadastro);
@@ -50,7 +48,7 @@ namespace Cadastro_Drones
             try
             {
                 DatabaseConnection.Connection.Open();
-                string query = "UPDATE Operador SET Tipo = @Tipo, Cadastro = @Cadastro, Nome = @Nome WHERE Id = @operadorId";
+                string query = "UPDATE Operador SET Tipo = @Tipo, Cadastro = @Cadastro, Nome_Operador = @Nome WHERE Id = @operadorId";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
                 command.Parameters.AddWithValue("@Tipo", operador.Tipo);
                 command.Parameters.AddWithValue("@Cadastro", operador.Cadastro);
@@ -69,14 +67,14 @@ namespace Cadastro_Drones
             }
         }
 
-        public static void Delete(Operador operador)
+        public static void Delete(int Id)
         {
             try
             {
                 DatabaseConnection.Connection.Open();
                 string query = "DELETE FROM Operador WHERE Id = @Id";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
-                command.Parameters.AddWithValue("@Id", operador.Id);
+                command.Parameters.AddWithValue("@Id", Id);
 
                 command.ExecuteNonQuery();
             }
@@ -100,7 +98,7 @@ namespace Cadastro_Drones
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    Console.WriteLine(reader["Id"] + " - " + reader["Tipo"] + " - " + reader["Cadastro"] + " - " + reader["Nome"]);
+                    Console.WriteLine(reader["Operador_Id"] + " - " + reader["Nome_operador"] + " - " + reader["Tipo"] + " - " + reader["Cadastro"]);
                 }
             }
             catch (MySqlException e)
