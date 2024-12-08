@@ -9,7 +9,10 @@ namespace Cadastro_Drones
         static void Main(string[] args)
         {
             DatabaseConnection.Start();
+            Operacao.ListarTodasOperacoesDetalhadas();
             Menu.MostrarMenu();
+            Operacao.ListarHistorico();
+
         }
     }
 }

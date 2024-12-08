@@ -46,9 +46,10 @@ namespace Cadastro_Drones
             try
             {
                 DatabaseConnection.Connection.Open();
-                string query = "UPDATE Modelo SET Nome = @Nome WHERE modelo_id = @modeloId";
+                string query = "UPDATE Modelo SET Nome_modelo = @Nome, Peso_decolagem= @peso  WHERE modelo_id = @modeloId";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
                 command.Parameters.AddWithValue("@Nome", modelo.Nome);
+                command.Parameters.AddWithValue("@peso", modelo.Peso);
                 command.Parameters.AddWithValue("@modeloId", modeloId);
 
                 command.ExecuteNonQuery();

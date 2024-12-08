@@ -16,10 +16,11 @@ namespace Cadastro_Drones
                 Console.WriteLine("4. Gerenciar Aeronaves");
                 Console.WriteLine("5. Gerenciar Operações");
                 Console.WriteLine("6. Mostrar todas tabelas");
-                Console.WriteLine("7. Sair");
+                Console.WriteLine("7. Mostrar historico de operações");
+                Console.WriteLine("8. Sair");
                 Console.Write("Escolha uma opção: ");
 
-                string opcao = Console.ReadLine();
+                string opcao = LerString();
                 switch (opcao)
                 {
                     case "1":
@@ -45,6 +46,9 @@ namespace Cadastro_Drones
                         Operacao.List();
                         break;
                     case "7":
+                        Operacao.ListarHistorico();
+                        break;
+                    case "8":
                         exit = true;
                         return;
                     default:
@@ -66,17 +70,17 @@ namespace Cadastro_Drones
                 Console.WriteLine("5. Voltar");
                 Console.Write("Escolha uma opção: ");
 
-                string opcao = Console.ReadLine();
+                string opcao = LerString();
 
                 switch (opcao)
                 {
                     case "1":
-                        Console.Write("Tipo: Pessoa Física ou Pessoa Jurídica");
-                        string tipo = Console.ReadLine();
-                        Console.Write("Cadastro: CPF ou CNPJ");
-                        string cadastro = Console.ReadLine();
-                        Console.Write("Nome: ");
-                        string nome = Console.ReadLine();
+                        Console.WriteLine("Tipo: Pessoa Física ou Pessoa Jurídica");
+                        string tipo = LerString();
+                        Console.WriteLine("Cadastro: CPF ou CNPJ");
+                        string cadastro = LerString();
+                        Console.WriteLine("Nome: ");
+                        string nome = LerString();
                         Operador.Insert(new Operador(tipo, cadastro, nome));
                         Console.WriteLine("Operador adicionado com sucesso!");
                         break;
@@ -86,21 +90,21 @@ namespace Cadastro_Drones
                         break;
 
                     case "3":
-                        Console.Write("Digite o ID do operador para atualizar: ");
-                        int idOperador = int.Parse(Console.ReadLine());
-                        Console.Write("Novo Tipo: ");
-                        tipo = Console.ReadLine();
-                        Console.Write("Novo Cadastro: ");
-                        cadastro = Console.ReadLine();
-                        Console.Write("Novo Nome: ");
-                        nome = Console.ReadLine();
+                        Console.WriteLine("Digite o ID do operador para atualizar: ");
+                        int idOperador = LerInteiro();
+                        Console.WriteLine("Novo Tipo: ");
+                        tipo = LerString();
+                        Console.WriteLine("Novo Cadastro: ");
+                        cadastro = LerString();
+                        Console.WriteLine("Novo Nome: ");
+                        nome = LerString();
                         Operador.Update(idOperador, new Operador(tipo, cadastro, nome));
                         Console.WriteLine("Operador atualizado com sucesso!");
                         break;
 
                     case "4":
-                        Console.Write("Digite o ID do operador para deletar: ");
-                        idOperador = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Digite o ID do operador para deletar: ");
+                        idOperador = LerInteiro();
                         Operador.Delete(idOperador);
                         Console.WriteLine("Operador deletado com sucesso!");
                         break;
@@ -127,15 +131,15 @@ namespace Cadastro_Drones
                 Console.WriteLine("5. Voltar");
                 Console.Write("Escolha uma opção: ");
 
-                string opcao = Console.ReadLine();
+                string opcao = LerString();
 
                 switch (opcao)
                 {
                     case "1":
-                        Console.Write("Nome do Modelo: ");
-                        string nomeModelo = Console.ReadLine();
-                        Console.Write("Peso de Decolagem: ");
-                        float peso = float.Parse(Console.ReadLine());
+                        Console.WriteLine("Nome do Modelo: ");
+                        string nomeModelo = LerString();
+                        Console.WriteLine("Peso de Decolagem: ");
+                        float peso = LerFloat();
                         Modelo.Insert(new Modelo(nomeModelo, peso));
                         Console.WriteLine("Modelo adicionado com sucesso!");
                         break;
@@ -145,19 +149,19 @@ namespace Cadastro_Drones
                         break;
 
                     case "3":
-                        Console.Write("Digite o ID do modelo para atualizar: ");
-                        int idModelo = int.Parse(Console.ReadLine());
-                        Console.Write("Novo Nome do Modelo: ");
-                        nomeModelo = Console.ReadLine();
-                        Console.Write("Novo Peso de Decolagem: ");
-                        peso = float.Parse(Console.ReadLine());
+                        Console.WriteLine("Digite o ID do modelo para atualizar: ");
+                        int idModelo = LerInteiro();
+                        Console.WriteLine("Novo Nome do Modelo: ");
+                        nomeModelo = LerString();
+                        Console.WriteLine("Novo Peso de Decolagem: ");
+                        peso = LerFloat();
                         Modelo.Update(idModelo, new Modelo(nomeModelo, peso));
                         Console.WriteLine("Modelo atualizado com sucesso!");
                         break;
 
                     case "4":
-                        Console.Write("Digite o ID do modelo para deletar: ");
-                        idModelo = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Digite o ID do modelo para deletar: ");
+                        idModelo = LerInteiro();
                         Modelo.Delete(idModelo);
                         Console.WriteLine("Modelo deletado com sucesso!");
                         break;
@@ -184,13 +188,13 @@ namespace Cadastro_Drones
                 Console.WriteLine("5. Voltar");
                 Console.Write("Escolha uma opção: ");
 
-                string opcao = Console.ReadLine();
+                string opcao = LerString();
 
                 switch (opcao)
                 {
                     case "1":
-                        Console.Write("Nome do Fabricante: ");
-                        string nomeFabricante = Console.ReadLine();
+                        Console.WriteLine("Nome do Fabricante: ");
+                        string nomeFabricante = LerString();
                         Fabricante.Insert(new Fabricante(nomeFabricante));
                         Console.WriteLine("Fabricante adicionado com sucesso!");
                         break;
@@ -200,17 +204,17 @@ namespace Cadastro_Drones
                         break;
 
                     case "3":
-                        Console.Write("Digite o ID do fabricante para atualizar: ");
-                        int idFabricante = int.Parse(Console.ReadLine());
-                        Console.Write("Novo Nome do Fabricante: ");
-                        nomeFabricante = Console.ReadLine();
+                        Console.WriteLine("Digite o ID do fabricante para atualizar: ");
+                        int idFabricante = LerInteiro();
+                        Console.WriteLine("Novo Nome do Fabricante: ");
+                        nomeFabricante = LerString();
                         Fabricante.Update(idFabricante, new Fabricante(nomeFabricante));
                         Console.WriteLine("Fabricante atualizado com sucesso!");
                         break;
 
                     case "4":
-                        Console.Write("Digite o ID do fabricante para deletar: ");
-                        idFabricante = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Digite o ID do fabricante para deletar: ");
+                        idFabricante = LerInteiro();
                         Fabricante.Delete(idFabricante);
                         Console.WriteLine("Fabricante deletado com sucesso!");
                         break;
@@ -237,19 +241,19 @@ namespace Cadastro_Drones
                 Console.WriteLine("5. Voltar");
                 Console.Write("Escolha uma opção: ");
 
-                string opcao = Console.ReadLine();
+                string opcao = LerString();
 
                 switch (opcao)
                 {
                     case "1":
-                        Console.Write("Código da Aeronave: ");
-                        string codigo = Console.ReadLine();
-                        Console.Write("Número de Série: ");
-                        string numeroSerie = Console.ReadLine();
-                        Console.Write("ID do Modelo: ");
-                        int modeloId = int.Parse(Console.ReadLine());
-                        Console.Write("ID do Fabricante: ");
-                        int fabricanteId = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Código da Aeronave: ");
+                        string codigo = LerString();
+                        Console.WriteLine("Número de Série: ");
+                        string numeroSerie = LerString();
+                        Console.WriteLine("ID do Modelo: ");
+                        int modeloId = LerInteiro();
+                        Console.WriteLine("ID do Fabricante: ");
+                        int fabricanteId = LerInteiro();
                         Aeronave.Insert(new Aeronave(codigo, numeroSerie, modeloId, fabricanteId));
                         Console.WriteLine("Aeronave adicionada com sucesso!");
                         break;
@@ -259,23 +263,23 @@ namespace Cadastro_Drones
                         break;
 
                     case "3":
-                        Console.Write("Digite o ID da aeronave para atualizar: ");
-                        int idAeronave = int.Parse(Console.ReadLine());
-                        Console.Write("Novo Código da Aeronave: ");
-                        codigo = Console.ReadLine();
-                        Console.Write("Novo Número de Série: ");
-                        numeroSerie = Console.ReadLine();
-                        Console.Write("Novo ID do Modelo: ");
-                        modeloId = int.Parse(Console.ReadLine());
-                        Console.Write("Novo ID do Fabricante: ");
-                        fabricanteId = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Digite o ID da aeronave para atualizar: ");
+                        int idAeronave = LerInteiro();
+                        Console.WriteLine("Novo Código da Aeronave: ");
+                        codigo = LerString();
+                        Console.WriteLine("Novo Número de Série: ");
+                        numeroSerie = LerString();
+                        Console.WriteLine("Novo ID do Modelo: ");
+                        modeloId = LerInteiro();
+                        Console.WriteLine("Novo ID do Fabricante: ");
+                        fabricanteId = LerInteiro();
                         Aeronave.Update(idAeronave, new Aeronave(codigo, numeroSerie, modeloId, fabricanteId));
                         Console.WriteLine("Aeronave atualizada com sucesso!");
                         break;
 
                     case "4":
-                        Console.Write("Digite o ID da aeronave para deletar: ");
-                        idAeronave = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Digite o ID da aeronave para deletar: ");
+                        idAeronave = LerInteiro();
                         Aeronave.Delete(idAeronave);
                         Console.WriteLine("Aeronave deletada com sucesso!");
                         break;
@@ -290,6 +294,37 @@ namespace Cadastro_Drones
             }
         }
 
+        private static void AddOperacao()
+        {
+            Console.WriteLine("ID do Operador: ");
+            int operadorId = LerInteiro();
+            Console.WriteLine("ID da Aeronave: ");
+            int aeronaveId = LerInteiro();
+            Console.WriteLine("Ramo de Atividade: ");
+            string ramo = LerString();
+            Console.WriteLine("Tipo de Uso: ");
+            string tipoUso = LerString();
+
+            DateOnly data = DateOnly.MinValue;
+            bool isValidDate = false;
+
+            while (!isValidDate)
+            {
+                Console.WriteLine("Data de Validade (dd-MM-yyyy): ");
+                string inputData = LerString();
+
+                isValidDate = DateOnly.TryParseExact(inputData, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out data);
+
+                if (!isValidDate)
+                {
+                    Console.WriteLine("Data inválida. Por favor, insira a data no formato dd-MM-yyyy.");
+                }
+            }
+
+            Operacao.Insert(new Operacao(operadorId, aeronaveId, ramo, data, tipoUso));
+            Console.WriteLine("Operação adicionada com sucesso!");
+        }
+
         private static void MenuOperacoes()
         {
             while (true)
@@ -302,23 +337,12 @@ namespace Cadastro_Drones
                 Console.WriteLine("5. Voltar");
                 Console.Write("Escolha uma opção: ");
 
-                string opcao = Console.ReadLine();
+                string opcao = LerString();
 
                 switch (opcao)
                 {
                     case "1":
-                        Console.Write("ID do Operador: ");
-                        int operadorId = int.Parse(Console.ReadLine());
-                        Console.Write("ID da Aeronave: ");
-                        int aeronaveId = int.Parse(Console.ReadLine());
-                        Console.Write("Ramo de Atividade: ");
-                        string ramo = Console.ReadLine();
-                        Console.Write("Tipo de Uso: ");
-                        string tipoUso = Console.ReadLine();
-                        Console.Write("Data de Validade (dd-MM-yyyy): ");
-                        DateOnly data = DateOnly.ParseExact(Console.ReadLine(), "dd-MM-yyyy", null); // Mudança aqui
-                        Operacao.Insert(new Operacao(operadorId, aeronaveId, ramo, data, tipoUso));
-                        Console.WriteLine("Operação adicionada com sucesso!");
+                        AddOperacao();
                         break;
 
                     case "2":
@@ -326,25 +350,25 @@ namespace Cadastro_Drones
                         break;
 
                     case "3":
-                        Console.Write("Digite o ID do Operador da operação que deseja atualizar: ");
-                        operadorId = int.Parse(Console.ReadLine());
-                        Console.Write("Digite o ID da Aeronave da operação que deseja atualizar: ");
-                        aeronaveId = int.Parse(Console.ReadLine());
-                        Console.Write("Novo Ramo de Atividade: ");
-                        ramo = Console.ReadLine();
-                        Console.Write("Novo Tipo de Uso: ");
-                        tipoUso = Console.ReadLine();
-                        Console.Write("Nova Data de Validade (dd-MM-yyyy): ");
-                        data = DateOnly.ParseExact(Console.ReadLine(), "dd-MM-yyyy", null);
+                        Console.WriteLine("Digite o ID do Operador da operação que deseja atualizar: ");
+                        int operadorId = LerInteiro();
+                        Console.WriteLine("Digite o ID da Aeronave da operação que deseja atualizar: ");
+                        int aeronaveId = LerInteiro();
+                        Console.WriteLine("Novo Ramo de Atividade: ");
+                        string ramo = LerString();
+                        Console.WriteLine("Novo Tipo de Uso: ");
+                        string tipoUso = LerString();
+                        Console.WriteLine("Nova Data de Validade (dd-MM-yyyy): ");
+                        DateOnly data = DateOnly.ParseExact(LerString(), "dd-MM-yyyy", null);
                         Operacao.Update(aeronaveId, operadorId, new Operacao(operadorId, aeronaveId, ramo, data, tipoUso));
                         Console.WriteLine("Operação atualizada com sucesso!");
                         break;
 
                     case "4":
-                        Console.Write("Digite o ID do operador da operação que deseja deletar: ");
-                        operadorId = int.Parse(Console.ReadLine());
-                        Console.Write("Digite o ID da aeronave da operação que deseja deletar: ");
-                        aeronaveId = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Digite o ID do operador da operação que deseja deletar: ");
+                        operadorId = LerInteiro();
+                        Console.WriteLine("Digite o ID da aeronave da operação que deseja deletar: ");
+                        aeronaveId = LerInteiro();
                         Operacao.Delete(aeronaveId, operadorId);
                         Console.WriteLine("Operação deletada com sucesso!");
                         break;
@@ -356,6 +380,37 @@ namespace Cadastro_Drones
                         Console.WriteLine("Opção inválida!");
                         break;
                 }
+            }
+        }
+
+        private static int LerInteiro()
+        {
+            int resultado;
+            while (true)
+            {
+                if (int.TryParse(Console.ReadLine(), out resultado))
+                {
+                    return resultado;
+                }
+                Console.WriteLine("Entrada inválida. Por favor, insira um número inteiro.");
+            }
+        }
+
+        private static string LerString()
+        {
+            return Console.ReadLine();
+        }
+
+        private static float LerFloat()
+        {
+            float resultado;
+            while (true)
+            {
+                if (float.TryParse(Console.ReadLine(), out resultado))
+                {
+                    return resultado;
+                }
+                Console.WriteLine("Entrada inválida. Por favor, insira um número decimal.");
             }
         }
     }

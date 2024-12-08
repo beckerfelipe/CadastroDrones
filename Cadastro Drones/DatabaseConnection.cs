@@ -43,6 +43,7 @@ namespace Cadastro_Drones
             command = new MySqlCommand(
              @"
             DROP TABLE IF EXISTS `Operacao`;
+            DROP TABLE IF EXISTS `HISTORICO_OPERACOES`;
             DROP TABLE IF EXISTS `Aeronave`;
             DROP TABLE IF EXISTS `Operador`;
             DROP TABLE IF EXISTS `Fabricante`;
@@ -116,7 +117,18 @@ namespace Cadastro_Drones
                 "FOREIGN KEY (`Operador_Id`) " +
                 "REFERENCES `Operador` (`Operador_Id`) " +
                 "ON DELETE CASCADE)", connection);
+            command.ExecuteNonQuery();
 
+            command = new MySqlCommand(@"
+                CREATE TABLE IF NOT EXISTS HISTORICO_OPERACOES (
+                    Historico_Id INT NOT NULL AUTO_INCREMENT,  
+                    Operador_Id INT NOT NULL,  
+                    Aeronave_Id INT NOT NULL,  
+                    ramo_atividade VARCHAR(100) NOT NULL,  
+                    tipo_uso VARCHAR(100) NOT NULL,  
+                    data_validade DATE NOT NULL,  
+                    PRIMARY KEY (Historico_Id)
+                );", connection);
             command.ExecuteNonQuery();
 
             command = new MySqlCommand("CREATE OR REPLACE VIEW `Todas_Operacoes` AS " +
@@ -135,6 +147,26 @@ namespace Cadastro_Drones
                 "INNER JOIN `Aeronave` a ON op.Aeronave_Id = a.Aeronave_Id " +
                 "INNER JOIN `Modelo` m ON a.Modelo_id = m.Modelo_Id " +
                 "INNER JOIN `Fabricante` f ON a.Fabricante_id = f.Fabricante_Id", connection);
+            command.ExecuteNonQuery();
+
+            command = new MySqlCommand(
+              "CREATE TRIGGER `INSERE_HISTORICO_OPERACOES` " +
+              "AFTER INSERT ON `Operacao` " +
+              "FOR EACH ROW " +
+              "INSERT INTO `HISTORICO_OPERACOES` " +
+              "(`Operador_Id`, `Aeronave_Id`, `ramo_atividade`, `tipo_uso`, `data_validade`) " +
+              "VALUES (NEW.Operador_Id, NEW.Aeronave_Id, NEW.ramo_atividade, NEW.tipo_uso, NEW.data_validade)",
+            connection);
+            command.ExecuteNonQuery();
+
+            command = new MySqlCommand(
+                "CREATE TRIGGER `UPDATE_HISTORICO_OPERACOES` " +
+                "AFTER UPDATE ON `Operacao` " +
+                "FOR EACH ROW " +
+                "INSERT INTO `HISTORICO_OPERACOES` " +
+                "(`Operador_Id`, `Aeronave_Id`, `ramo_atividade`, `tipo_uso`, `data_validade`) " +
+                "VALUES (NEW.Operador_Id, NEW.Aeronave_Id, NEW.ramo_atividade, NEW.tipo_uso, NEW.data_validade)",
+              connection);
             command.ExecuteNonQuery();
         }
 

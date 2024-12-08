@@ -36,7 +36,7 @@ namespace Cadastro_Drones
                 command.Parameters.AddWithValue("@AeronaveId", opera.AeronaveId);
                 command.Parameters.AddWithValue("@OperadorId", opera.OperadorId);
                 command.Parameters.AddWithValue("@RamoAtividade", opera.ramoAtividade);
-                command.Parameters.AddWithValue("@DataValidade", opera.dataValidade.ToString("yyyy-MM-dd"));
+                command.Parameters.AddWithValue("@DataValidade", opera.dataValidade.ToString("yyyy-MM-dd")); 
                 command.Parameters.AddWithValue("@TipoUso", opera.tipoUso);
 
                 command.ExecuteNonQuery();
@@ -99,6 +99,70 @@ namespace Cadastro_Drones
                 DatabaseConnection.Connection.Close();
             }
         }
+
+        public static void ListarTodasOperacoesDetalhadas()
+        {
+            DatabaseConnection.Connection.Open();
+            MySqlCommand command = new MySqlCommand("SELECT * FROM Todas_Operacoes", DatabaseConnection.Connection);
+            MySqlDataReader reader = command.ExecuteReader();
+
+            Console.WriteLine(new string('-', 45));
+            Console.WriteLine("|{0, -10}|{1, -10}|{2, -10}|{3, -10}|{4, -10}|{5, -10}|{6, -10}|{7, -10}|{8, -10}|{9, -10}|", "Operador_Id", "Aeronave_Id", "Ramo", "Uso", "Data", "Operador", "Aeronave", "Série", "Modelo", "Fabricante");
+            Console.WriteLine(new string('-', 45));
+
+            while (reader.Read())
+            {
+                Console.WriteLine("|{0, -10}|{1, -10}|{2, -10}|{3, -10}|{4, -10}|{5, -10}|{6, -10}|{7, -10}|{8, -10}|{9, -10}|",
+                    reader["Operador_Id"], reader["Aeronave_Id"], reader["ramo_atividade"], reader["tipo_uso"], Convert.ToDateTime(reader["data_validade"]).ToString("dd-MM-yyyy"),
+                    reader["nome_operador"], reader["codigo_aeronave"], reader["numero_serie"], reader["nome_modelo"], reader["nome_fabricante"]);
+            }
+
+            Console.WriteLine(new string('-', 45));
+            DatabaseConnection.Connection.Close();
+        }
+
+        public static void ListarHistorico()
+        {
+            try
+            {
+                DatabaseConnection.Connection.Open();
+
+                string query = "SELECT * FROM HISTORICO_OPERACOES";
+                MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                Console.WriteLine(new string('-', 85));
+                Console.WriteLine("{0,42}", "HISTÓRICO DE OPERAÇÕES");
+                Console.WriteLine(new string('-', 85));
+                Console.WriteLine("{0,-15} {1,-15} {2,-25} {3,-15} {4,-15}", "Aeronave_Id", "Operador_Id", "Ramo_Atividade", "Data_Validade", "Tipo_Uso");
+                Console.WriteLine(new string('-', 85));
+
+                while (reader.Read())
+                {
+                    DateTime dataValidade = Convert.ToDateTime(reader["data_validade"]);
+                    string dataValidadeFormatada = dataValidade.ToString("dd-MM-yyyy");
+
+                    Console.WriteLine("{0,-15} {1,-15} {2,-25} {3,-15} {4,-15}",
+                        reader["Aeronave_Id"],
+                        reader["Operador_Id"],
+                        reader["ramo_atividade"],
+                        dataValidadeFormatada,
+                        reader["tipo_uso"]);
+                }
+
+                Console.WriteLine("");
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Erro: " + e.Message);
+            }
+            finally
+            {
+                DatabaseConnection.Connection.Close();
+            }
+        }
+
+
 
         public static void List()   
         {

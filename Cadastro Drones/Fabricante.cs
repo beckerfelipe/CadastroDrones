@@ -42,7 +42,7 @@ namespace Cadastro_Drones
             try
             {
                 DatabaseConnection.Connection.Open();
-                string query = "UPDATE Fabricante SET Nome = @Nome WHERE fabricante_id = @fabricanteId";
+                string query = "UPDATE Fabricante SET Nome_fabricante = @Nome WHERE fabricante_id = @fabricanteId";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
                 command.Parameters.AddWithValue("@Nome", fabricante.Nome);
                 command.Parameters.AddWithValue("@Id", fabricanteId);

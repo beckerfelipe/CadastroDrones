@@ -82,7 +82,7 @@ namespace Cadastro_Drones
                 DatabaseConnection.Connection.Open();
                 string query = "DELETE FROM Aeronave WHERE aeronave_id = @aeronaveId";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
-                command.Parameters.AddWithValue("@Id", Id);
+                command.Parameters.AddWithValue("@aeronaveId", Id);
 
                 command.ExecuteNonQuery();
 
