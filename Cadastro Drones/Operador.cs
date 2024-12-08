@@ -48,12 +48,12 @@ namespace Cadastro_Drones
             try
             {
                 DatabaseConnection.Connection.Open();
-                string query = "UPDATE Operador SET Tipo = @Tipo, Cadastro = @Cadastro, Nome_Operador = @Nome WHERE Id = @operadorId";
+                string query = "UPDATE Operador SET Tipo = @Tipo, Cadastro = @Cadastro, Nome_Operador = @Nome WHERE operador_id = @operadorId";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
                 command.Parameters.AddWithValue("@Tipo", operador.Tipo);
                 command.Parameters.AddWithValue("@Cadastro", operador.Cadastro);
                 command.Parameters.AddWithValue("@Nome", operador.Nome);
-                command.Parameters.AddWithValue("@Id", operadorId);
+                command.Parameters.AddWithValue("@operadorId", operadorId);
 
                 command.ExecuteNonQuery();
             }
@@ -72,9 +72,9 @@ namespace Cadastro_Drones
             try
             {
                 DatabaseConnection.Connection.Open();
-                string query = "DELETE FROM Operador WHERE Id = @Id";
+                string query = "DELETE FROM Operador WHERE operador_id = @operador_id";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
-                command.Parameters.AddWithValue("@Id", Id);
+                command.Parameters.AddWithValue("@operador_id", Id);
 
                 command.ExecuteNonQuery();
             }
@@ -96,10 +96,22 @@ namespace Cadastro_Drones
                 string query = "SELECT * FROM Operador";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
                 MySqlDataReader reader = command.ExecuteReader();
+
+                Console.WriteLine(new string('-', 80));
+                Console.WriteLine("{0,40}","OPERADOR");
+                Console.WriteLine(new string('-', 80));
+                Console.WriteLine("{0,-15} {1,-25} {2,-15} {3,-20}", "Operador_Id", "Nome_operador", "Tipo", "Cadastro");
+                Console.WriteLine(new string('-', 80));
+
                 while (reader.Read())
                 {
-                    Console.WriteLine(reader["Operador_Id"] + " - " + reader["Nome_operador"] + " - " + reader["Tipo"] + " - " + reader["Cadastro"]);
+                    Console.WriteLine("{0,-15} {1,-25} {2,-15} {3,-20}",
+                        reader["Operador_Id"],
+                        reader["Nome_operador"],
+                        reader["Tipo"],
+                        reader["Cadastro"]);
                 }
+                Console.WriteLine("");
             }
             catch (MySqlException e)
             {

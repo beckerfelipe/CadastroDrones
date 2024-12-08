@@ -54,13 +54,13 @@ namespace Cadastro_Drones
             try
             {
                 DatabaseConnection.Connection.Open();
-                string query = "UPDATE Aeronave SET Codigo_Aeronave = @Codigo_Aeronave, Numero_Serie = @Numero_Serie, Modelo_id = @IdModelo, Fabricante_id = @IdFabricante WHERE Id = @aeronaveId";
+                string query = "UPDATE Aeronave SET Codigo_Aeronave = @Codigo_Aeronave, Numero_Serie = @Numero_Serie, Modelo_id = @IdModelo, Fabricante_id = @IdFabricante WHERE aeronave_id = @aeronaveId";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
                 command.Parameters.AddWithValue("@Codigo_Aeronave", aeronave.Codigo_Aeronave);
                 command.Parameters.AddWithValue("@Numero_Serie", aeronave.Numero_Serie);
                 command.Parameters.AddWithValue("@IdModelo", aeronave.IdModelo);
                 command.Parameters.AddWithValue("@IdFabricante", aeronave.IdFabricante);
-                command.Parameters.AddWithValue("@Id", aeronaveId);
+                command.Parameters.AddWithValue("@aeronaveId", aeronaveId);
 
                 command.ExecuteNonQuery();
 
@@ -80,7 +80,7 @@ namespace Cadastro_Drones
             try
             {
                 DatabaseConnection.Connection.Open();
-                string query = "DELETE FROM Aeronave WHERE Id = @aeronaveId";
+                string query = "DELETE FROM Aeronave WHERE aeronave_id = @aeronaveId";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
                 command.Parameters.AddWithValue("@Id", Id);
 
@@ -105,10 +105,23 @@ namespace Cadastro_Drones
                 string query = "SELECT * FROM Aeronave";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
                 MySqlDataReader reader = command.ExecuteReader();
+
+                Console.WriteLine(new string('-', 75));
+                Console.WriteLine("{0,37}", "AERONAVE");
+                Console.WriteLine(new string('-', 75));
+                Console.WriteLine("{0,-12} {1,-18} {2,-18} {3,-10} {4,-15}", "Aeronave_Id", "Codigo_Aeronave", "Numero_Serie", "Modelo_Id", "Fabricante_Id");
+                Console.WriteLine(new string('-', 75));
+
                 while (reader.Read())
                 {
-                    Console.WriteLine(reader["Aeronave_Id"] + " - " + reader["Codigo_Aeronave"] + " - " + reader["Numero_Serie"] + " - " + reader["modelo_id"] + " - "+ reader["fabricante_id"]);
+                    Console.WriteLine("{0,-12} {1,-18} {2,-18} {3,-10} {4,-15}",
+                        reader["Aeronave_Id"],
+                        reader["Codigo_Aeronave"],
+                        reader["Numero_Serie"],
+                        reader["modelo_id"],
+                        reader["fabricante_id"]);
                 }
+                Console.WriteLine("");
             }
             catch (MySqlException e)
             {

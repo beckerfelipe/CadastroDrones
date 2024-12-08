@@ -42,7 +42,7 @@ namespace Cadastro_Drones
             try
             {
                 DatabaseConnection.Connection.Open();
-                string query = "UPDATE Fabricante SET Nome = @Nome WHERE Id = @fabricanteId";
+                string query = "UPDATE Fabricante SET Nome = @Nome WHERE fabricante_id = @fabricanteId";
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
                 command.Parameters.AddWithValue("@Nome", fabricante.Nome);
                 command.Parameters.AddWithValue("@Id", fabricanteId);
@@ -90,10 +90,20 @@ namespace Cadastro_Drones
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
                 MySqlDataReader reader = command.ExecuteReader();
 
+                Console.WriteLine(new string('-', 45));
+                Console.WriteLine("{0,22}", "FABRICANTE");
+                Console.WriteLine(new string('-', 45));
+                Console.WriteLine("{0,-15} {1,-30}", "Fabricante_Id", "Nome_fabricante");
+                Console.WriteLine(new string('-', 45));
+
                 while (reader.Read())
                 {
-                    Console.WriteLine(reader["fabricante_Id"] + " - " + reader["Nome_fabricante"]);
+                    Console.WriteLine("{0,-15} {1,-30}",
+                        reader["fabricante_Id"],
+                        reader["Nome_fabricante"]);
                 }
+                Console.WriteLine("");
+
             }
             catch (MySqlException e)
             {

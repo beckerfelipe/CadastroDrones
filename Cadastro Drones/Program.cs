@@ -9,13 +9,7 @@ namespace Cadastro_Drones
         static void Main(string[] args)
         {
             DatabaseConnection.Start();
-            Operador.List();
-            Aeronave.List();
-            Fabricante.List();
-            Modelo.List();
-            Operacao.List();
-            Fabricante.Delete(1);
-            Operacao.List();
+            Menu.MostrarMenu();
         }
     }
 }

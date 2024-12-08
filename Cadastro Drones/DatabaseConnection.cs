@@ -104,24 +104,23 @@ namespace Cadastro_Drones
 
             command = new MySqlCommand(
                 "CREATE TABLE IF NOT EXISTS `Operacao` (" +
-                "`Operacao_Id` INT NOT NULL AUTO_INCREMENT, " +
                 "`Operador_Id` INT NOT NULL, " +
                 "`Aeronave_Id` INT NOT NULL, " +
                 "`ramo_atividade` VARCHAR(100) NOT NULL, " +
                 "`tipo_uso` VARCHAR(100) NOT NULL, " +
                 "`data_validade` DATE NOT NULL, " +
-                "PRIMARY KEY (`Operacao_Id`), " +
+                "PRIMARY KEY (`Operador_Id`, `Aeronave_Id`), " +
                 "FOREIGN KEY (`Aeronave_Id`) " +
                 "REFERENCES `Aeronave` (`Aeronave_Id`) " +
                 "ON DELETE CASCADE, " +
                 "FOREIGN KEY (`Operador_Id`) " +
                 "REFERENCES `Operador` (`Operador_Id`) " +
                 "ON DELETE CASCADE)", connection);
+
             command.ExecuteNonQuery();
 
             command = new MySqlCommand("CREATE OR REPLACE VIEW `Todas_Operacoes` AS " +
-                "SELECT op.Operacao_Id, " +
-                "op.Operador_Id, " +
+                "SELECT op.Operador_Id, " +
                 "op.Aeronave_Id, " +
                 "op.ramo_atividade, " +
                 "op.tipo_uso, " +

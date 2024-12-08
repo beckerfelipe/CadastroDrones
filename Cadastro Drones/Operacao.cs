@@ -109,10 +109,26 @@ namespace Cadastro_Drones
                 MySqlCommand command = new MySqlCommand(query, DatabaseConnection.Connection);
                 MySqlDataReader reader = command.ExecuteReader();
 
+                Console.WriteLine(new string('-', 85));
+                Console.WriteLine("{0,42}", "OPERAÇÃO");
+                Console.WriteLine(new string('-', 85));
+                Console.WriteLine("{0,-15} {1,-15} {2,-25} {3,-15} {4,-15}","Aeronave_Id", "Operador_Id", "Ramo_Atividade", "Data_Validade", "Tipo_Uso");
+                Console.WriteLine(new string('-', 85));
+
                 while (reader.Read())
-                {//TODO: corrigir o formato da data
-                    Console.WriteLine(reader["Aeronave_Id"] + " - " + reader["Operador_Id"] + " - " + reader["Ramo_Atividade"] + " - " +reader["Data_Validade"] + " - " + reader["Tipo_Uso"]);
+                {
+                    DateTime dataValidade = Convert.ToDateTime(reader["Data_Validade"]);
+                    string dataFormatada = dataValidade.ToString("yyyy-MM-dd");
+
+                    Console.WriteLine("{0,-15} {1,-15} {2,-25} {3,-15} {4,-15}",
+                        reader["Aeronave_Id"],
+                        reader["Operador_Id"],
+                        reader["Ramo_Atividade"],
+                        dataFormatada,
+                        reader["Tipo_Uso"]);
                 }
+                Console.WriteLine("");
+
             }
             catch (MySqlException e)
             {
