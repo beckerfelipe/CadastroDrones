@@ -200,13 +200,13 @@ namespace Cadastro_Drones
 
         static void InserirFabricantes()
         {
-            Fabricante fabricante = new Fabricante("Fabricante 1");
+            Fabricante fabricante = new Fabricante("DJI");
             Fabricante.Insert(fabricante);
 
-            fabricante = new Fabricante("Fabricante 2");
+            fabricante = new Fabricante("XMOBOTS");
             Fabricante.Insert(fabricante);
 
-            fabricante = new Fabricante("Fabricante 3");
+            fabricante = new Fabricante("Robson");
             Fabricante.Insert(fabricante);
 
             Console.WriteLine("Fabricantes inseridos");
@@ -214,13 +214,13 @@ namespace Cadastro_Drones
 
         static void InserirAeronaves()
         {
-            Aeronave aeronave = new Aeronave("123", "123456", 1, 1);
+            Aeronave aeronave = new Aeronave("PP-11082012", "08QCE7C0120QNU", 1, 1);
             Aeronave.Insert(aeronave);
 
-            aeronave = new Aeronave("456", "456789", 2, 2);
+            aeronave = new Aeronave("PP-26534803", "163dG6G00170Y0", 2, 2);
             Aeronave.Insert(aeronave);
 
-            aeronave = new Aeronave("789", "789123", 3, 3);
+            aeronave = new Aeronave("PP-35041299", "3YTBJAB", 3, 3);
             Aeronave.Insert(aeronave);
 
             Console.WriteLine("Aeronaves inseridas");
@@ -228,13 +228,13 @@ namespace Cadastro_Drones
 
         static void InserirOperacoes()
         {
-            Operacao operacao = new Operacao(1, 1, "Ramo 1", DateOnly.FromDateTime(DateTime.Now), "Uso 1");
+            Operacao operacao = new Operacao(1, 1, "Aerofotografia", DateOnly.Parse("2024-12-15"), "Básico");
             Operacao.Insert(operacao);
 
-            operacao = new Operacao(2, 2, "Ramo 2", DateOnly.FromDateTime(DateTime.Now), "Uso 2");
+            operacao = new Operacao(2, 2, "Aerocinematografia", DateOnly.Parse("2024-12-16"), "Básico");
             Operacao.Insert(operacao);
 
-            operacao = new Operacao(3, 3, "Ramo 3", DateOnly.FromDateTime(DateTime.Now), "Uso 3");
+            operacao = new Operacao(3, 3, "Recreativo", DateOnly.Parse("2024-12-17"), "Básico");
             Operacao.Insert(operacao);
 
             Console.WriteLine("Operações inseridas");
